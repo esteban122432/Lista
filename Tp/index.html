@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Asistencia del Aula</title>
+   
+    <link rel="stylesheet" href="estilos.css">
+   
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <h1>🗓️ Control de Asistencia</h1>
+
+        <form id="formularioAsistencia">
+            <div style="margin-bottom: 20px;">
+                <label for="curso">Curso/Materia:</label>
+                <select id="curso" name="curso" required>
+                    <option value="">Seleccione un curso</option>
+                    <option value="1">Base de Datos</option>
+                    <option value="2">Proyecto Informático</option>
+                    <option value="3">Lab de Algoritmos y Estructura de Datos</option>
+                    <option value="4">Organización de Computadoras</option>
+                </select>
+               
+                <label for="fecha" style="margin-left: 30px;">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" value="2025-10-28" required>
+            </div>
+
+            <table id="tablaAsistencia">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">N°</th>
+                        <th style="width: 50%;">Alumno</th>
+                        <th>P</th>
+                        <th>A</th>
+                        <th>T</th>
+                        <th>RA</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-estudiantes">
+                    </tbody>
+            </table>
+
+            <button type="submit" id="guardar-btn">💾 Guardar Asistencia</button>
+        </form>
+    </div>
+
+</body>
+</html>
