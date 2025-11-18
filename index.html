@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencia</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <h1>Control de Asistencia</h1>
+    </header>
+
+    <main class="main-container">
+        <section id="MODULO_LISTA" class="section-card">
+            <h2>Tomar Asistencia por Materia</h2>
+
+            <div class="selectores">
+                <div class="input-group">
+                    <label for="selectorCurso">Seleccionar Curso:</label>
+                    <select id="selectorCurso">
+                        <option value="">-- Seleccione un Curso --</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="selectorMateria">Seleccionar Materia:</label>
+                    <select id="selectorMateria" disabled>
+                        <option value="">-- Seleccione Curso Primero --</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="listaAlumnos" class="lista-alumnos">
+                <p>Seleccione un curso y una materia para cargar la lista de alumnos</p>
+            </div>
+        </section>
+
+        <section id="MODULO_ALTA_ALUMNO" class="section-card">
+            <h2>Alta de Alumno Nuevo</h2>
+
+            <form id="formularioAltaAlumno" class="form-alta">
+                <div class="input-group">
+                    <label for="inputNombre">Nombre:</label>
+                    <input type="text" id="inputNombre" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="inputApellido">Apellido:</label>
+                    <input type="text" id="inputApellido" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="selectorCursoNuevo">Curso de Asignación:</label>
+                    <select id="selectorCursoNuevo" required>
+                        <option value="">-- Seleccione Curso --</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="botonAltaAlumno" class="btn-primary">Registrar Alumno</button>
+                <p id="mensajeRespuesta" class="mensaje-form"></p>
+            </form>
+        </section>
+
+        <section id="MODULO_HISTORIAL" class="section-card">
+            <h2>Historial de Registros</h2>
+            <div class="selectores">
+                <div class="input-group">
+                    <label for="fechaInicio">Desde:</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+                <div class="input-group">
+                    <label for="fechaFin">Hasta:</label>
+                    <input type="date" id="fechaFin">
+                </div>
+                <button id="botonFiltrar" class="btn-secondary">Aplicar Filtro</button>
+            </div>
+
+            <div id="contenedorTablaHistorial" class="history-table-container">
+                <p>Ingrese un rango de fechas para ver los registros...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
