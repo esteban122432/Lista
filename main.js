@@ -1,4 +1,4 @@
-const URL_BASE = 'http://localhost:3000'; 
+const URL_BASE = 'http://localhost:3000';
 const ESTADOS_VALIDOS = ['P', 'A', 'T', 'RA', 'AP'];
 
 async function cargarCursos() {
@@ -74,11 +74,11 @@ async function cargarAlumnos(cursoId, materiaId) {
                 <thead>
                     <tr>
                         <th>Apellido, Nombre</th>
-                        <th>Presente (P)</th>
-                        <th>Ausente (A)</th>
-                        <th>Tarde (T)</th>
-                        <th>Ret. C/ Av. (RA)</th>
-                        <th>Abs. Just. (AP)</th> <th>Último Reg.</th>
+                        <th>P</th>
+                        <th>A</th>
+                        <th>T</th>
+                        <th>RA</th>
+                        <th>AP</th> <th>Último Reg.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,16 +89,27 @@ async function cargarAlumnos(cursoId, materiaId) {
             const asistencias = await resAsistencia.json();
             const estadoReciente = asistencias.estado || 'N/A';
             
-            const getClaseActiva = (estado) => estadoReciente === estado ? 'activo' : '';
+            const generarRadio = (estado) => {
+                const checked = estadoReciente === estado ? 'checked' : '';
+                const activoClass = estadoReciente === estado ? 'activo' : '';
+                return `
+                    <label class="estado-label">
+                        <input type="radio" name="estado-${alumno.id}" class="estado-radio" data-alumno-id="${alumno.id}" data-estado="${estado}" ${checked} onchange="manejarRegistro(this)">
+                        <span class="radio-custom ${activoClass}"></span>
+                        <span class="radio-text">${estado}</span>
+                    </label>
+                `;
+            };
 
             tablaHTML += `
                 <tr>
                     <td>${alumno.apellido}, ${alumno.nombre}</td>
-                    <td><button class="estado-btn ${getClaseActiva('P')}" data-alumno-id="${alumno.id}" data-estado="P" onclick="manejarRegistro(this)">P</button></td>
-                    <td><button class="estado-btn ${getClaseActiva('A')}" data-alumno-id="${alumno.id}" data-estado="A" onclick="manejarRegistro(this)">A</button></td>
-                    <td><button class="estado-btn ${getClaseActiva('T')}" data-alumno-id="${alumno.id}" data-estado="T" onclick="manejarRegistro(this)">T</button></td>
-                    <td><button class="estado-btn ${getClaseActiva('RA')}" data-alumno-id="${alumno.id}" data-estado="RA" onclick="manejarRegistro(this)">RA</button></td>
-                    <td><button class="estado-btn ${getClaseActiva('AP')}" data-alumno-id="${alumno.id}" data-estado="AP" onclick="manejarRegistro(this)">AP</button></td> <td><span class="estado-reciente">${estadoReciente}</span></td>
+                    <td class="radio-container">${generarRadio('P')}</td>
+                    <td class="radio-container">${generarRadio('A')}</td>
+                    <td class="radio-container">${generarRadio('T')}</td>
+                    <td class="radio-container">${generarRadio('RA')}</td>
+                    <td class="radio-container">${generarRadio('AP')}</td>
+                    <td><span class="estado-reciente">${estadoReciente}</span></td>
                 </tr>
             `;
         }
@@ -112,14 +123,14 @@ async function cargarAlumnos(cursoId, materiaId) {
     }
 }
 
-window.manejarRegistro = async function(boton) {
+window.manejarRegistro = async function(radioInput) {
     const selectorCurso = document.getElementById('selectorCurso');
     const selectorMateria = document.getElementById('selectorMateria');
     const inputInicio = document.getElementById('fechaInicio');
     const inputFin = document.getElementById('fechaFin');
     
-    const alumno_id = boton.dataset.alumnoId;
-    const estado = boton.dataset.estado;
+    const alumno_id = radioInput.dataset.alumnoId;
+    const estado = radioInput.dataset.estado;
     const curso_id = selectorCurso.value;
     const materia_id = selectorMateria.value;
 
@@ -137,12 +148,14 @@ window.manejarRegistro = async function(boton) {
             body: JSON.stringify(data)
         });
         
-        const fila = boton.closest('tr');
+        const fila = radioInput.closest('tr');
         const celdaUltimoRegistro = fila.querySelector('.estado-reciente');
         
         if (respuesta.ok) {
-            fila.querySelectorAll('.estado-btn').forEach(b => b.classList.remove('activo'));
-            boton.classList.add('activo');
+            
+            fila.querySelectorAll('.radio-custom').forEach(b => b.classList.remove('activo'));
+            radioInput.nextElementSibling.classList.add('activo');
+            
             celdaUltimoRegistro.textContent = estado;
             
             cargarHistorial(inputInicio.value, inputFin.value); 
@@ -162,8 +175,8 @@ async function cargarHistorial(fechaInicio, fechaFin) {
     contenedorTablaHistorial.innerHTML = '<p>Cargando registros...</p>';
 
     if (!fechaInicio || !fechaFin) {
-         contenedorTablaHistorial.innerHTML = '<p>Ingrese las fechas para ver el historial.</p>';
-         return;
+           contenedorTablaHistorial.innerHTML = '<p>Ingrese las fechas para ver el historial.</p>';
+           return;
     }
 
     try {
@@ -340,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!data.nombre || !data.apellido || !data.curso_id) {
             mensajeRespuesta.textContent = 'Complete todos los campos.';
-            mensajeRespuesta.style.color = 'red';
+            mensajeRespuesta.style.color = 'black';
             return;
         }
 
@@ -355,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (respuesta.ok) {
                 mensajeRespuesta.textContent = `Éxito. ${resultado.message}`;
-                mensajeRespuesta.style.color = 'green';
+                mensajeRespuesta.style.color = 'black';
                 
                 formularioAltaAlumno.reset();
                 
@@ -366,11 +379,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             } else {
                 mensajeRespuesta.textContent = `Error: ${resultado.message}`;
-                mensajeRespuesta.style.color = 'red';
+                mensajeRespuesta.style.color = 'black';
             }
         } catch (error) {
             mensajeRespuesta.textContent = 'Error de red.';
-            mensajeRespuesta.style.color = 'red';
+            mensajeRespuesta.style.color = 'black';
         }
     });
 
