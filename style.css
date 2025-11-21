@@ -1,16 +1,17 @@
 body {
     font-family: 'Roboto', sans-serif; 
     margin: 0;
-    background-color: #f4f4f4; 
-    color: #333;
+    background-color: white;
+    color: black;
 }
 
 header {
-    background-color: #007bff;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 20px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid black;
 }
 
 header h1 {
@@ -32,15 +33,16 @@ header h1 {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
 }
 
 h2 {
     font-size: 1.4em;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid black;
     padding-bottom: 10px;
     margin-top: 0;
     margin-bottom: 20px;
-    color: #555;
+    color: black;
 }
 
 .selectores {
@@ -61,38 +63,31 @@ h2 {
 .input-group label {
     font-weight: 500;
     margin-bottom: 5px;
-    color: #666;
+    color: black;
 }
 
 .input-group input, .input-group select {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 4px;
     font-size: 1em;
+    background-color: white;
+    color: black;
 }
 
 .btn-primary, .btn-secondary, .btn-edit, .btn-delete {
     padding: 10px 15px;
-    border: none;
+    border: 1px solid black;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
-    color: white;
+    color: black;
+    background-color: white;
     transition: background-color 0.2s;
 }
 
-.btn-primary {
-    background-color: #6df78d; 
-}
-.btn-primary:hover {
-    background-color: #218838;
-}
-
-.btn-secondary {
-    background-color: #6c757d; 
-}
-.btn-secondary:hover {
-    background-color: #5a6268;
+.btn-primary:hover, .btn-secondary:hover, .btn-edit:hover, .btn-delete:hover {
+    background-color: #eee;
 }
 
 .lista-alumnos {
@@ -108,12 +103,12 @@ h2 {
 .tabla-asistencia th, .tabla-asistencia td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #eee;
+    border: 1px solid black;
 }
 
 .tabla-asistencia th {
-    background-color: #f8f8f8;
-    color: #333;
+    background-color: #eee;
+    color: black;
     font-weight: 500;
     text-align: left;
 }
@@ -124,24 +119,67 @@ h2 {
     text-align: left;
 }
 
-.estado-btn {
-    padding: 6px 10px;
-    border-radius: 15px;
+.radio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.estado-radio {
+    display: none;
+}
+
+.radio-custom {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid black;
+    background-color: white;
     cursor: pointer;
+    position: relative;
+}
+
+.estado-radio:checked + .radio-custom {
+    border-color: black;
+}
+
+.estado-radio:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.estado-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8em;
     font-weight: 700;
-    width: 45px;
-    margin: 2px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px 0;
 }
 
-.estado-btn[data-estado="P"] { background-color: #325039; color: white; } 
-.estado-btn[data-estado="A"] { background-color: #ff0019; color: white; } 
-.estado-btn[data-estado="T"] { background-color: #daa300; color: rgb(255, 255, 255); } 
-.estado-btn[data-estado="RA"] { background-color: #00ddff; color: white; }
-.estado-btn[data-estado="AP"] { background-color: #5900ff; color: white; } 
-
-.estado-btn.activo {
-    box-shadow: 0 0 0 3px #000;
+.estado-label .radio-text {
+    margin-top: 5px;
+    color: black;
 }
+
+.estado-radio:checked + .radio-custom.activo {
+    border-width: 4px;
+}
+
 
 .form-alta {
     display: grid;
@@ -179,12 +217,12 @@ h2 {
 
 .tabla-historial th, .tabla-historial td {
     padding: 10px;
-    border: 10px solid #eee;
+    border: 1px solid black;
     text-align: left;
 }
 
 .tabla-historial th {
-    background-color: #f8f8f8;
+    background-color: #eee;
     font-weight: 500;
 }
 
@@ -193,22 +231,12 @@ h2 {
     text-align: center;
 }
 
-.estado-p { background-color: #d4edda; color: #155724; }
-.estado-a { background-color: #f8d7da; color: #721c24; }
-.estado-t { background-color: #fff3cd; color: #856404; }
-.estado-ra { background-color: #d1ecf1; color: #0c5460; }
-.estado-ap { background-color: #e0d9f4; color: #4b1a85; }
+.estado-p { background-color: white; color: black; border: 1px solid black; }
+.estado-a { background-color: #ddd; color: black; border: 1px solid black; }
+.estado-t { background-color: #bbb; color: black; border: 1px solid black; }
+.estado-ra { background-color: #999; color: black; border: 1px solid black; }
+.estado-ap { background-color: #777; color: white; border: 1px solid black; }
 
 .historial-acciones {
     text-align: center;
-}
-
-.btn-edit {
-    background-color: #007bff;
-    margin: 0 2px;
-}
-
-.btn-delete {
-    background-color: #dc3545;
-    margin: 0 2px;
 }
